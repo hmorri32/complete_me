@@ -46,22 +46,19 @@ class CompleteMe
   def suggest(prefix, node = @head)
     clear_suggestions
     letters = prefix.chars
-    letters.each do |letter|
-      node = node.children[letter]
-    end
+    letters.each { |letter| node = node.children[letter] }
     find_word_traversal(node, prefix)
-    return @suggestions
   end
 
   def find_word_traversal(node, prefix)
     @suggestions << prefix if node.is_word 
-    
-    yungKeys = node.children.keys
-    yungKeys.each do |letter|
-      child  = node.children[letter]
-      concat = prefix + letter
+    yung_keys = node.children.keys
+    yung_keys.each do |letter|
+      child   = node.children[letter]
+      concat  = prefix + letter
       find_word_traversal(child, concat)
     end
+    return @suggestions
   end
   
   def clear_suggestions
