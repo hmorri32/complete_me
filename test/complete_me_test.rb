@@ -7,14 +7,14 @@ class CompleteMeTest < Minitest::Test
     @cm = CompleteMe.new
   end
 
-  # def test_starting_count
-  #   assert_equal 0, cm.count
-  # end
+  def test_starting_count
+    assert_equal 0, cm.count
+  end
 
-  # def test_inserts_single_word
-  #   cm.insert("pizza")
-  #   assert_equal 1, cm.count
-  # end
+  def test_inserts_single_word
+    cm.insert("pizza")
+    assert_equal 1, cm.count
+  end
 
   # def test_inserts_multiple_words
   #   cm.populate("pizza\ndog\ncat")
@@ -58,13 +58,13 @@ class CompleteMeTest < Minitest::Test
   #   assert_equal "doggerelist", cm.suggest("doggerel").first
   # end
 
-  # def insert_words(words)
-  #   cm.populate(words.join("\n"))
-  # end
+  def insert_words(words)
+    cm.populate(words.join("\n"))
+  end
 
-  # def medium_word_list
-  #   File.read("medium.txt")
-  # end
+  def medium_word_list
+    File.read("medium.txt")
+  end
 
   # def large_word_list
   #   File.read("/usr/share/dict/words")
