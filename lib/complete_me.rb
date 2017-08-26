@@ -10,6 +10,10 @@ class CompleteMe
   def insert(word, node = @head)
     return if word.empty? || word.nil?
     letters = word.chars
+    iterate_n_insert(word, node, letters)
+  end
+
+  def iterate_n_insert(word, node, letters)
     letters.each.with_index do |letter, index|
       letter = word[index]
       if !node.children[letter]
