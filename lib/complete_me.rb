@@ -2,8 +2,8 @@ class CompleteMe
   attr_accessor :count
   
   def initialize
-    @head = Node.new
-    @count = 0
+    @head        = Node.new
+    @count       = 0
     @suggestions = []
   end
 
@@ -17,11 +17,15 @@ class CompleteMe
     letters.each.with_index do |letter, index|
       letter = word[index]
       create_node_if_absent(letter, node)
-      node = node.children[letter]
-      if index == word.length - 1
-        node.is_word = true
-        @count +=1
-      end
+      node   = node.children[letter]
+      update_if_word(word, node, index)
+    end
+  end
+
+  def update_if_word(word, node, index)
+    if index == word.length - 1
+      node.is_word = true
+      @count +=1
     end
   end
 
@@ -29,5 +33,14 @@ class CompleteMe
     if !node.children[letter]
       node.children[letter] = Node.new
     end
+  end
+
+  def populate(string)
+    formatted = format(string)
+    formatted.each { |word| insert(word) }
+  end
+
+  def format(string)
+    string.strip.split("\n")
   end
 end
