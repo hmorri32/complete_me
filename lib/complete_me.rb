@@ -47,18 +47,26 @@ class CompleteMe
     clear_suggestions
     letters = prefix.chars
     letters.each { |letter| node = node.children[letter] }
-    find_word_traversal(node, prefix)
+    find_word(node, prefix)
+    @suggestions    
   end
 
-  def find_word_traversal(node, prefix)
-    @suggestions << prefix if node.is_word 
+  def find_word(node, prefix)
+    push_word(node, prefix)
+    reassign_node(node, prefix)
+  end
+
+  def reassign_node(node, prefix)
     yung_keys = node.children.keys
     yung_keys.each do |letter|
       child   = node.children[letter]
       concat  = prefix + letter
-      find_word_traversal(child, concat)
+      find_word(child, concat)
     end
-    return @suggestions
+  end
+
+  def push_word(node, prefix)
+    @suggestions << prefix if node.is_word     
   end
   
   def clear_suggestions
