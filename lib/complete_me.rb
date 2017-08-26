@@ -16,14 +16,18 @@ class CompleteMe
   def iterate_n_insert(word, node, letters)
     letters.each.with_index do |letter, index|
       letter = word[index]
-      if !node.children[letter]
-        node.children[letter] = Node.new
-      end
+      create_node_if_absent(letter, node)
       node = node.children[letter]
       if index == word.length - 1
         node.is_word = true
         @count +=1
       end
+    end
+  end
+
+  def create_node_if_absent(letter, node)
+    if !node.children[letter]
+      node.children[letter] = Node.new
     end
   end
 end
