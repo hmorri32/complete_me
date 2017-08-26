@@ -15,9 +15,8 @@ class CompleteMe
 
   def iterate_n_insert(word, node, letters)
     letters.each.with_index do |letter, index|
-      letter = word[index]
       create_node_if_absent(letter, node)
-      node   = node.children[letter]
+      node = node.children[letter]
       update_if_word(word, node, index)
     end
   end
@@ -42,5 +41,30 @@ class CompleteMe
 
   def format(string)
     string.strip.split("\n")
+  end
+
+  def suggest(prefix, node = @head)
+    clear_suggestions
+    letters = prefix.chars
+    letters.each do |letter|
+      node = node.children[letter]
+    end
+    find_word_traversal(node, prefix)
+    return @suggestions
+  end
+
+  def find_word_traversal(node, prefix)
+    @suggestions << prefix if node.is_word 
+    
+    yungKeys = node.children.keys
+    yungKeys.each do |letter|
+      child  = node.children[letter]
+      concat = prefix + letter
+      find_word_traversal(child, concat)
+    end
+  end
+  
+  def clear_suggestions
+    @suggestions = []
   end
 end
