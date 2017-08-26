@@ -16,15 +16,15 @@ class CompleteMeTest < Minitest::Test
     assert_equal 1, cm.count
   end
 
-  # def test_inserts_multiple_words
-  #   cm.populate("pizza\ndog\ncat")
-  #   assert_equal 3, cm.count
-  # end
+  def test_inserts_multiple_words
+    cm.populate("pizza\ndog\ncat")
+    assert_equal 3, cm.count
+  end
 
-  # def test_counts_inserted_words
-  #   insert_words(["pizza", "aardvark", "zombies", "a", "xylophones"])
-  #   assert_equal 5, cm.count
-  # end
+  def test_counts_inserted_words
+    insert_words(["pizza", "aardvark", "zombies", "a", "xylophones"])
+    assert_equal 5, cm.count
+  end
 
   # def test_suggests_off_of_small_dataset
   #   insert_words(["pizza", "aardvark", "zombies", "a", "xylophones"])
