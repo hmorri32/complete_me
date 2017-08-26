@@ -26,24 +26,24 @@ class CompleteMeTest < Minitest::Test
     assert_equal 5, cm.count
   end
 
-  # def test_suggests_off_of_small_dataset
-  #   insert_words(["pizza", "aardvark", "zombies", "a", "xylophones"])
-  #   assert_equal ["pizza"], cm.suggest("p")
-  #   assert_equal ["pizza"], cm.suggest("piz")
-  #   assert_equal ["zombies"], cm.suggest("zo")
-  #   assert_equal ["a", "aardvark"], cm.suggest("a").sort
-  #   assert_equal ["aardvark"], cm.suggest("aa")
-  # end
+  def test_suggests_off_of_small_dataset
+    insert_words(["pizza", "aardvark", "zombies", "a", "xylophones"])
+    assert_equal ["pizza"], cm.suggest("p")
+    assert_equal ["pizza"], cm.suggest("piz")
+    assert_equal ["zombies"], cm.suggest("zo")
+    assert_equal ["a", "aardvark"], cm.suggest("a").sort
+    assert_equal ["aardvark"], cm.suggest("aa")
+  end
 
-  # def test_inserts_medium_dataset
-  #   cm.populate(medium_word_list)
-  #   assert_equal medium_word_list.split("\n").count, cm.count
-  # end
+  def test_inserts_medium_dataset
+    cm.populate(medium_word_list)
+    assert_equal medium_word_list.split("\n").count, cm.count
+  end
 
-  # def test_suggests_off_of_medium_dataset
-  #   cm.populate(medium_word_list)
-  #   assert_equal ["williwaw", "wizardly"], cm.suggest("wi").sort
-  # end
+  def test_suggests_off_of_medium_dataset
+    cm.populate(medium_word_list)
+    assert_equal ["williwaw", "wizardly"], cm.suggest("wi").sort
+  end
 
   # def test_selects_off_of_medium_dataset
   #   cm.populate(medium_word_list)
@@ -63,7 +63,7 @@ class CompleteMeTest < Minitest::Test
   end
 
   def medium_word_list
-    File.read("medium.txt")
+    File.read("test/medium.txt")
   end
 
   # def large_word_list
