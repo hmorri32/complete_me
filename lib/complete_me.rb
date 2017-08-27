@@ -1,75 +1,48 @@
+require_relative 'trie'
+
 class CompleteMe
-  attr_accessor :count
+  attr_reader :library
+  def initialize 
+    @trie    = Trie.new
+    @library = Hash.new
+  end
+
+  def insert(word)
+    @trie.insert(word)
+  end
   
-  def initialize
-    @head        = Node.new
-    @count       = 0
-    @suggestions = []
-  end
-
-  def insert(word, node = @head)
-    return if word.empty? || word.nil?
-    letters = word.chars
-    iterate_n_insert(word, node, letters)
-  end
-
-  def iterate_n_insert(word, node, letters)
-    letters.each.with_index do |letter, index|
-      create_node_if_absent(letter, node)
-      node = node.children[letter]
-      update_if_word(word, node, index)
-    end
-  end
-
-  def update_if_word(word, node, index)
-    if index == word.length - 1
-      node.is_word = true
-      @count +=1
-    end
-  end
-
-  def create_node_if_absent(letter, node)
-    if !node.children[letter]
-      node.children[letter] = Node.new
-    end
+  def count
+    @trie.count
   end
 
   def populate(string)
-    formatted = format(string)
-    formatted.each { |word| insert(word) }
+    @trie.populate(string)
   end
 
-  def format(string)
-    string.strip.split("\n")
-  end
-
-  def suggest(prefix, node = @head)
-    clear_suggestions
-    letters = prefix.chars
-    letters.each { |letter| node = node.children[letter] }
-    find_word(node, prefix)
-    @suggestions    
-  end
-
-  def find_word(node, prefix)
-    push_word(node, prefix)
-    reassign_node(node, prefix)
-  end
-
-  def reassign_node(node, prefix)
-    yung_keys = node.children.keys
-    yung_keys.each do |letter|
-      child   = node.children[letter]
-      concat  = prefix + letter
-      find_word(child, concat)
+  def suggest(word)
+    if @library[word].nil?
+      @trie.suggest(word)
+    else 
+      (library_sort(word) << @trie.suggest(word)).flatten.uniq
     end
   end
 
-  def push_word(node, prefix)
-    @suggestions << prefix if node.is_word     
+  def select(key = prefix, word)
+    # TODO - check if the word is actually in our yung trie 
+    if @library[key].nil?
+       @library[key] = {word => 1}
+    else
+      if @library[key][word]
+         @library[key][word] += 1
+      else 
+        @library[key][word] = 1   
+      end
+    end
   end
-  
-  def clear_suggestions
-    @suggestions = []
+
+  def library_sort(prefix)
+    @library[prefix].sort
+                    .reverse!
+                    .map(&:first)
   end
 end
