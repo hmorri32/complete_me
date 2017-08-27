@@ -1,10 +1,10 @@
 require_relative 'trie'
 
 class CompleteMe
-  attr_reader :library
+  attr_reader :select
   def initialize 
-    @trie    = Trie.new
-    @library = Hash.new
+    @trie   = Trie.new
+    @select = Hash.new
   end
 
   def insert(word)
@@ -20,29 +20,33 @@ class CompleteMe
   end
 
   def suggest(word)
-    if @library[word].nil?
-      @trie.suggest(word)
+    if @select[word].nil?
+       @trie.suggest(word)
     else 
-      (library_sort(word) << @trie.suggest(word)).flatten.uniq
+      (select_sort(word) << @trie.suggest(word)).flatten.uniq
     end
   end
 
   def select(key = prefix, word)
     # TODO - check if the word is actually in our yung trie 
-    if @library[key].nil?
-       @library[key] = {word => 1}
-    else
-      if @library[key][word]
-         @library[key][word] += 1
-      else 
-        @library[key][word] = 1   
-      end
-    end
+    !@select[key] ? create_key(key, word) : increment(key, word)
   end
 
-  def library_sort(prefix)
-    @library[prefix].sort
-                    .reverse!
-                    .map(&:first)
+  def select_sort(prefix)
+    @select[prefix].sort_by {|a, b| b}
+                   .reverse!
+                   .map(&:first)
+  end
+
+  def create_key(key, word)
+    @select[key] = {word => 1}    
+  end
+
+  def increment(key, word)
+    if @select[key][word]
+       @select[key][word] += 1
+    else 
+      @select[key][word] = 1   
+    end 
   end
 end
