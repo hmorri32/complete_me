@@ -1,3 +1,4 @@
+require 'csv'
 require_relative 'node'
 
 class Trie
@@ -37,6 +38,10 @@ class Trie
   def populate(string)
     formatted = format(string)
     formatted.each { |word| insert(word) }
+  end
+
+  def populate_csv(file)
+    CSV.foreach(file) {|row| insert(row[-1])}
   end
 
   def format(string)
