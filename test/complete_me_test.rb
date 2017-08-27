@@ -45,18 +45,21 @@ class CompleteMeTest < Minitest::Test
     assert_equal ["williwaw", "wizardly"], cm.suggest("wi").sort
   end
 
-  # def test_selects_off_of_medium_dataset
-  #   cm.populate(medium_word_list)
-  #   cm.select("wi", "wizardly")
-  #   assert_equal ["wizardly", "williwaw"], cm.suggest("wi")
-  # end
+  def test_selects_off_of_medium_dataset
+    cm.populate(medium_word_list)
+    cm.select("wi", "wizardly")
+    cm.select("wi", "wizardly")
+    p cm.library
+    assert_equal ["wizardly", "williwaw"], cm.suggest("wi")    
+  end
 
-  # def test_works_with_large_dataset
-  #   cm.populate(large_word_list)
-  #   assert_equal ["doggerel", "doggereler", "doggerelism", "doggerelist", "doggerelize", "doggerelizer"], cm.suggest("doggerel").sort
-  #   cm.select("doggerel", "doggerelist")
-  #   assert_equal "doggerelist", cm.suggest("doggerel").first
-  # end
+  def test_works_with_large_dataset
+    skip
+    cm.populate(large_word_list)
+    assert_equal ["doggerel", "doggereler", "doggerelism", "doggerelist", "doggerelize", "doggerelizer"], cm.suggest("doggerel").sort
+    cm.select("doggerel", "doggerelist")
+    assert_equal "doggerelist", cm.suggest("doggerel").first
+  end
 
   def insert_words(words)
     cm.populate(words.join("\n"))
@@ -66,7 +69,7 @@ class CompleteMeTest < Minitest::Test
     File.read("test/medium.txt")
   end
 
-  # def large_word_list
-  #   File.read("/usr/share/dict/words")
-  # end
+  def large_word_list
+    File.read("/usr/share/dict/words")
+  end
 end
