@@ -1,7 +1,10 @@
-require_relative 'trie'
+require_relative 'trie_methods'
 
 class CompleteMe
+  include SelectMethods
+
   attr_reader :select
+
   def initialize 
     @trie   = Trie.new
     @select = Hash.new
@@ -30,23 +33,5 @@ class CompleteMe
   def select(key = prefix, word)
     # TODO - check if the word is actually in our yung trie 
     !@select[key] ? create_key(key, word) : increment(key, word)
-  end
-
-  def select_sort(prefix)
-    @select[prefix].sort_by {|a, b| b}
-                   .reverse!
-                   .map(&:first)
-  end
-
-  def create_key(key, word)
-    @select[key] = {word => 1}    
-  end
-
-  def increment(key, word)
-    if @select[key][word]
-       @select[key][word] += 1
-    else 
-      @select[key][word] = 1   
-    end 
   end
 end
