@@ -1,4 +1,5 @@
-require_relative 'trie_methods'
+require_relative 'trie'
+require_relative 'trie_methods' 
 
 class CompleteMe
   include SelectMethods
