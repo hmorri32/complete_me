@@ -56,7 +56,7 @@ class CompleteMeTest < Minitest::Test
     cm.select("wi", "wizardly")
     cm.select("wi", "wizardly")
 
-    assert_equal ["wizardly", "williwaw"], cm.suggest("wi")    
+    assert_equal ["wizardly", "williwaw"], cm.suggest("wi")
   end
 
   def test_works_with_large_dataset
@@ -76,7 +76,7 @@ class CompleteMeTest < Minitest::Test
   end
 
   def medium_word_list
-    File.read("test/medium.txt")
+    File.read("test/data/medium.txt")
   end
 
   def large_word_list

@@ -7,7 +7,9 @@ class Trie
   include InsertMethods
   include SuggestMethods
 
-  attr_accessor :count, :suggestions
+  attr_accessor :head,
+                :count, 
+                :suggestions
 
   def initialize
     @head        = Node.new

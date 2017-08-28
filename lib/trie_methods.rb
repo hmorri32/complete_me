@@ -17,6 +17,7 @@ module InsertMethods
   def create_node_if_absent(letter, node)
     node.children[letter] = Node.new unless node.children[letter]
   end
+  
   def format(string)
     string.strip.split("\n")
   end
