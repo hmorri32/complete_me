@@ -2,7 +2,7 @@ require_relative 'node'
 require_relative 'trie_methods'
 require 'csv'
 
-# TODO test a bunch and make modules maybe 
+# TODO test a bunch and make modules maybe
 class Trie
   include InsertMethods
   include SuggestMethods
@@ -28,10 +28,6 @@ class Trie
   def populate(string)
     formatted = format(string)
     formatted.each { |word| insert(word) }
-  end
-
-  def populate_csv(file)
-    CSV.foreach(file) {|row| insert(row[-1])}
   end
 
   def suggest(prefix, node = @head)
