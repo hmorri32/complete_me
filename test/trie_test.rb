@@ -89,12 +89,10 @@ class TrieTest < Minitest::Test
     # @trie.populate(File.read('test/data/dictionary.txt'))
   end
 
-  def test_word_in_trie 
-    # @trie.insert('suh')
+  def test_delete_first
     @trie.insert('cool') 
     @trie.insert('cooler') 
     @trie.insert('cools') 
-
     cool = @trie.head.children['c'].children['o'].children['o'].children['l']
     
     assert cool.is_word    
@@ -102,66 +100,59 @@ class TrieTest < Minitest::Test
     @trie.delete('cool')
 
     assert_equal 2, @trie.count 
-
     refute cool.is_word
-
-    # cool = @trie.head.children['c'].children['o'].children['o'].children['l']
-    
-    # @trie.delete('cools')
   end
 
-  def test_cooler 
+  def test_delete_middle
     @trie.insert('cool') 
     @trie.insert('cooler') 
     @trie.insert('cools') 
 
-    cool = @trie.head.children['c'].children['o'].children['o'].children['l'].children['e'].children['r']
+    cooler = @trie.head.children['c'].children['o'].children['o'].children['l'].children['e'].children['r']
     
-    assert cool.is_word    
+    assert cooler.is_word    
     
     @trie.delete('cooler')
 
     assert_equal 2, @trie.count 
-    refute cool.is_word
-
+    refute cooler.is_word
   end
 
-  def test_coolers
+  def test_delete_coolers
     @trie.insert('cool') 
     @trie.insert('cooler') 
     @trie.insert('coolers') 
     @trie.insert('cools') 
     @trie.insert('banana')
 
-    cool = @trie.head.children['c'].children['o'].children['o'].children['l'].children['e'].children['r'].children['s']
+    coolers = @trie.head.children['c'].children['o'].children['o'].children['l'].children['e'].children['r'].children['s']
     
-    assert cool.is_word    
+    assert coolers.is_word    
     
     @trie.delete('coolers')
     @trie.delete('banana')
 
     assert_equal 3, @trie.count 
-    refute cool.is_word
+    refute coolers.is_word
   end
 
-  def test_cools 
-
+  def test_delete_end
     @trie.insert('cool') 
     @trie.insert('cooler') 
     @trie.insert('coolers') 
     @trie.insert('cools') 
     @trie.insert('banana')
 
-    cool = @trie.head.children['c'].children['o'].children['o'].children['l'].children['s']
+    cools = @trie.head.children['c'].children['o'].children['o'].children['l'].children['s']
 
     @trie.delete('cools')
     @trie.delete('banana')
     
     assert_equal 3, @trie.count 
-    refute cool.is_word
+    refute cools.is_word
   end
 
-  def test_delete
+  def test_delete_and_insert_and_delete
     @trie.insert('cool')
     @trie.insert('cooler')
 
@@ -182,16 +173,15 @@ class TrieTest < Minitest::Test
     @trie.delete('cooler')
 
     assert_equal 1, @trie.count
-    # @trie.delete('cooler')
   end
 
   def test_delete_extra_letters
     @trie.insert('cool')
     @trie.insert('cooler')
+    
     assert_equal 'r', @trie.head.children['c'].children['o'].children['o'].children['l'].children['e'].children['r'].value
 
     @trie.delete('cooler')
-    # p @trie
 
     assert_nil @trie.head.children['c'].children['o'].children['o'].children['l'].children['e']
     p @trie
