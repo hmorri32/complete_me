@@ -84,4 +84,116 @@ class TrieTest < Minitest::Test
   def insert_words(words)
     @trie.populate(words.join("\n"))
   end
+
+  def test_delete 
+    # @trie.populate(File.read('test/data/dictionary.txt'))
+  end
+
+  def test_word_in_trie 
+    # @trie.insert('suh')
+    @trie.insert('cool') 
+    @trie.insert('cooler') 
+    @trie.insert('cools') 
+
+    cool = @trie.head.children['c'].children['o'].children['o'].children['l']
+    
+    assert cool.is_word    
+    
+    @trie.delete('cool')
+
+    assert_equal 2, @trie.count 
+
+    refute cool.is_word
+
+    # cool = @trie.head.children['c'].children['o'].children['o'].children['l']
+    
+    # @trie.delete('cools')
+  end
+
+  def test_cooler 
+    @trie.insert('cool') 
+    @trie.insert('cooler') 
+    @trie.insert('cools') 
+
+    cool = @trie.head.children['c'].children['o'].children['o'].children['l'].children['e'].children['r']
+    
+    assert cool.is_word    
+    
+    @trie.delete('cooler')
+
+    assert_equal 2, @trie.count 
+    refute cool.is_word
+
+  end
+
+  def test_coolers
+    @trie.insert('cool') 
+    @trie.insert('cooler') 
+    @trie.insert('coolers') 
+    @trie.insert('cools') 
+    @trie.insert('banana')
+
+    cool = @trie.head.children['c'].children['o'].children['o'].children['l'].children['e'].children['r'].children['s']
+    
+    assert cool.is_word    
+    
+    @trie.delete('coolers')
+    @trie.delete('banana')
+
+    assert_equal 3, @trie.count 
+    refute cool.is_word
+  end
+
+  def test_cools 
+
+    @trie.insert('cool') 
+    @trie.insert('cooler') 
+    @trie.insert('coolers') 
+    @trie.insert('cools') 
+    @trie.insert('banana')
+
+    cool = @trie.head.children['c'].children['o'].children['o'].children['l'].children['s']
+
+    @trie.delete('cools')
+    @trie.delete('banana')
+    
+    assert_equal 3, @trie.count 
+    refute cool.is_word
+  end
+
+  def test_delete
+    @trie.insert('cool')
+    @trie.insert('cooler')
+
+    @trie.delete('cooler')
+    
+    assert_equal 1, @trie.count
+
+    @trie.insert('cooler')
+
+    assert_equal 2, @trie.count
+    
+    @trie.delete('cool')
+
+    assert_equal 1, @trie.count 
+
+    @trie.insert('cool')
+
+    @trie.delete('cooler')
+
+    assert_equal 1, @trie.count
+    # @trie.delete('cooler')
+  end
+
+  def test_delete_extra_letters
+    @trie.insert('cool')
+    @trie.insert('cooler')
+    assert_equal 'r', @trie.head.children['c'].children['o'].children['o'].children['l'].children['e'].children['r'].value
+
+    @trie.delete('cooler')
+    # p @trie
+
+    assert_nil @trie.head.children['c'].children['o'].children['o'].children['l'].children['e']
+    p @trie
+  end
 end
