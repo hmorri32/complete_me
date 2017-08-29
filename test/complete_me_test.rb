@@ -70,6 +70,20 @@ class CompleteMeTest < Minitest::Test
     assert_equal "doggerelist", cm.suggest("doggerel").first
   end
 
+  def test_select
+    cm.insert('cool')
+    cm.insert('cools')
+    cm.insert('cooler')
+    cm.insert('coolers')
+
+    cm.select('co', 'cooler')
+    cm.select('co', 'cooler')
+    cm.select('co', 'cools')
+
+    assert_equal "cooler", cm.suggest("co").first
+    assert_equal "cools", cm.suggest("co")[1]
+  end
+
   def insert_words(words)
     cm.populate(words.join("\n"))
   end
