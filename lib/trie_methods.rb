@@ -21,6 +21,14 @@ module InsertMethods
   def format(string)
     string.strip.split("\n")
   end
+
+  def populate_csv(file)
+    CSV.foreach(file) { |row| insert(row[-1]) }
+  end
+
+  def populate_txt(file)
+    populate(File.read(file))
+  end
 end
 
 module SuggestMethods
@@ -49,7 +57,7 @@ end
 
 module SelectMethods
   def select_sort(prefix)
-    @select[prefix].sort_by {|a, b| b}
+    @select[prefix].sort_by { |a, b| b }
                    .reverse!
                    .map(&:first)
   end
