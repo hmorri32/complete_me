@@ -61,7 +61,6 @@ class CompleteMeTest < Minitest::Test
 
   def test_works_with_large_dataset
     skip
-    # works but takes forever
     cm.populate(large_word_list)
 
     assert_equal ["doggerel", "doggereler", "doggerelism", "doggerelist", "doggerelize", "doggerelizer"], cm.suggest("doggerel").sort
