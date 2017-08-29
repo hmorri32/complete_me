@@ -15,7 +15,7 @@ module InsertMethods
   end
 
   def create_node_if_absent(letter, node)
-    node.children[letter] = Node.new unless node.children[letter]
+    node.children[letter] = Node.new(letter) unless node.children[letter]
   end
   
   def format(string)
