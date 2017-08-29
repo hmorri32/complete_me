@@ -66,3 +66,24 @@ module SelectMethods
     end 
   end
 end
+
+module DeleteMethods 
+  def node_pop(nodes)
+    node = nodes.pop
+    return if node.nil? || node.is_word
+
+    if node.children.empty?
+      parent = nodes.last
+      return if parent.nil?
+      parent.children.delete(node.value)
+    end
+    node_pop(nodes)
+  end
+
+  def find_node(arr, node = @head)
+    return @node_tank.last if arr.empty?
+    last = arr.shift 
+    @node_tank << node.children[last.value]
+    find_node(arr, node.children[last.value])
+  end
+end
