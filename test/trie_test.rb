@@ -60,6 +60,12 @@ class TrieTest < Minitest::Test
 
     assert_equal 1000, @trie.count
   end
+
+  def test_populate_method_txt
+    @trie.populate_txt('test/data/medium.txt')
+
+    assert_equal 1000, @trie.count
+  end
   
   def test_populate_csv_small_file
     @trie.populate_csv('test/data/20_addresses.csv')
@@ -76,17 +82,12 @@ class TrieTest < Minitest::Test
 
   def test_populate_csv_large_file
     skip
-    # works but takes forever
     @trie.populate_csv('test/data/addresses.csv')
     assert_equal 306013, @trie.count
   end
 
   def insert_words(words)
     @trie.populate(words.join("\n"))
-  end
-
-  def test_delete 
-    # @trie.populate(File.read('test/data/dictionary.txt'))
   end
 
   def test_delete_first
@@ -184,6 +185,5 @@ class TrieTest < Minitest::Test
     @trie.delete('cooler')
 
     assert_nil @trie.head.children['c'].children['o'].children['o'].children['l'].children['e']
-    p @trie
   end
 end
