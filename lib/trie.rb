@@ -4,9 +4,7 @@ require 'csv'
 
 # TODO test a bunch and make modules maybe
 class Trie
-  include InsertMethods
-  include SuggestMethods
-  include DeleteMethods
+  include Methods
 
   attr_accessor :head,
                 :count, 
