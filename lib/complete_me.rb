@@ -4,11 +4,11 @@ require_relative 'trie_methods'
 class CompleteMe
   include SelectMethods
 
-  attr_reader :select
+  attr_reader :selected
 
   def initialize 
-    @trie   = Trie.new
-    @select = Hash.new
+    @trie     = Trie.new
+    @selected = Hash.new
   end
 
   def insert(word)
@@ -24,7 +24,7 @@ class CompleteMe
   end
 
   def suggest(word)
-    if @select[word].nil?
+    if @selected[word].nil?
        @trie.suggest(word)
     else 
       (select_sort(word) << @trie.suggest(word)).flatten.uniq
@@ -33,6 +33,6 @@ class CompleteMe
 
   def select(key = prefix, word)
     # TODO - check if the word is actually in our yung trie 
-    !@select[key] ? create_key(key, word) : increment(key, word)
+    !@selected[key] ? create_key(key, word) : increment(key, word)
   end
 end
