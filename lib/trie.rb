@@ -2,7 +2,6 @@ require_relative 'node'
 require_relative 'trie_methods'
 require 'csv'
 
-# TODO test a bunch and make modules maybe
 class Trie
   include Methods
 
