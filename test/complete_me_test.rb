@@ -70,7 +70,7 @@ class CompleteMeTest < Minitest::Test
     assert_equal "doggerelist", cm.suggest("doggerel").first
   end
 
-  def test_select
+  def test_select_substring_specific
     cm.insert('cool')
     cm.insert('cools')
     cm.insert('cooler')
@@ -79,9 +79,24 @@ class CompleteMeTest < Minitest::Test
     cm.select('co', 'cooler')
     cm.select('co', 'cooler')
     cm.select('co', 'cools')
+    cm.select('cool', 'whatever')
 
     assert_equal "cooler", cm.suggest("co").first
     assert_equal "cools", cm.suggest("co")[1]
+    assert_equal "whatever", cm.suggest("cool")
+  end
+
+  def test_substring_specific_from_spec
+    cm.insert('pizza')
+    cm.insert('pizzeria')
+    cm.insert('pizzicato')
+    cm.insert('pize')
+
+    cm.select('piz', 'pizzeria')
+    cm.select('pi', 'pizzicato')
+
+    assert_equal 'pizzeria', cm.suggest('piz')[0]
+    assert_equal 'pizzicato', cm.suggest('pi')[0]
   end
 
   def insert_words(words)
