@@ -79,11 +79,9 @@ class CompleteMeTest < Minitest::Test
     cm.select('co', 'cooler')
     cm.select('co', 'cooler')
     cm.select('co', 'cools')
-    cm.select('cool', 'whatever')
 
     assert_equal "cooler", cm.suggest("co").first
     assert_equal "cools", cm.suggest("co")[1]
-    assert_equal "whatever", cm.suggest("cool")
   end
 
   def test_substring_specific_from_spec
@@ -97,6 +95,17 @@ class CompleteMeTest < Minitest::Test
 
     assert_equal 'pizzeria', cm.suggest('piz')[0]
     assert_equal 'pizzicato', cm.suggest('pi')[0]
+  end
+
+  def test_select_if_word_exists
+    cm.insert('pizza')
+    cm.insert('pizzeria')
+    cm.insert('pizzicato')
+    cm.insert('pize')
+    expected = {"pizza" => 1}
+    
+    assert_equal expected, cm.select('pi', 'pizza')
+    assert_nil cm.select('pi', 'watermelon')
   end
 
   def insert_words(words)
