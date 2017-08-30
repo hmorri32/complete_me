@@ -2,7 +2,7 @@ require_relative 'trie'
 require_relative 'trie_methods' 
 
 class CompleteMe
-  include SelectMethods
+  include Methods
 
   attr_reader :selected
 
@@ -32,7 +32,7 @@ class CompleteMe
   end
 
   def select(key = prefix, word)
-    # TODO - check if the word is actually in our yung trie 
+    return unless @trie.exists?(word)
     !@selected[key] ? create_key(key, word) : increment(key, word)
   end
 end
