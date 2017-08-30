@@ -1,4 +1,4 @@
-module InsertMethods
+module Methods
   def iterate_n_insert(word, node, letters)
     letters.each.with_index do |letter, index|
       create_node_if_absent(letter, node)
@@ -29,9 +29,7 @@ module InsertMethods
   def populate_txt(file)
     populate(File.read(file))
   end
-end
 
-module SuggestMethods
   def find_word(node, prefix)
     push_word(node, prefix)
     reassign_node(node, prefix)
@@ -53,13 +51,11 @@ module SuggestMethods
   def clear_suggestions
     @suggestions = []
   end
-end
 
-module SelectMethods
   def select_sort(prefix)
     @selected[prefix].sort_by { |a, b| b }
-                   .reverse!
-                   .map(&:first)
+                     .reverse!
+                     .map(&:first)
   end
 
   def create_key(key, word)
@@ -73,9 +69,14 @@ module SelectMethods
       @selected[key][word] = 1   
     end 
   end
-end
 
-module DeleteMethods 
+  def exists?(word)
+    letters = word.chars
+    nodes   = letters.map { |letter| Node.new(letter) }
+    node    = find_node(nodes)
+    node.is_word ? true : false if node
+  end
+
   def node_pop(nodes)
     node = nodes.pop
     return if node.nil? || node.is_word
@@ -89,6 +90,7 @@ module DeleteMethods
   end
 
   def find_node(arr, node = @head)
+    return false if node.nil?
     return @node_tank.last if arr.empty?
     last = arr.shift 
     @node_tank << node.children[last.value]
