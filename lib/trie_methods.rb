@@ -57,20 +57,20 @@ end
 
 module SelectMethods
   def select_sort(prefix)
-    @select[prefix].sort_by { |a, b| b }
+    @selected[prefix].sort_by { |a, b| b }
                    .reverse!
                    .map(&:first)
   end
 
   def create_key(key, word)
-    @select[key] = {word => 1}    
+    @selected[key] = {word => 1}    
   end
 
   def increment(key, word)
-    if @select[key][word]
-       @select[key][word] += 1
+    if @selected[key][word]
+       @selected[key][word] += 1
     else 
-      @select[key][word] = 1   
+      @selected[key][word] = 1   
     end 
   end
 end
